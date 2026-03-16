@@ -1,8 +1,8 @@
 streamlit
-opencv
+opencv-python
 mediapipe
 numpy
 pandas
 pillow
 reportlab
-opencv
+opencv-python==4.8.1.78
