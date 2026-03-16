@@ -5,3 +5,4 @@ numpy
 pandas
 pillow
 reportlab
+opencv-python==4.8.1.78
