@@ -1,6 +1,5 @@
 streamlit
 opencv-python
-mediapipe
 numpy
 pandas
 pillow
@@ -8,3 +7,4 @@ reportlab
 opencv-python==4.8.1.78
 gunicorn==23.0.0
 plotly==6.0.0
+mediapipe==0.9.3
