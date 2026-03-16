@@ -9,3 +9,5 @@ pillow
 reportlab
 mediapipe
 streamlit
+torch
+torchvision
