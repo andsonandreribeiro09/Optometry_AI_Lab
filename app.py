@@ -84,20 +84,33 @@ def captura_menu():
         st.success("Imagem capturada")
 
 def distancia_pupilar_menu():
+
     foto = st.camera_input("Capture o rosto")
+
     if foto:
+
         frame = load_image(foto)
         h, w, _ = frame.shape
+
         results = detect_face(frame)
-        if results.multi_face_landmarks:
-            landmarks = results.multi_face_landmarks[0].landmark
-            # ⚡ Corrigido: usar .x e .y
+
+        # NOVA API
+        if results.face_landmarks:
+
+            landmarks = results.face_landmarks[0]
+
+            # ⚡ usar índices dos olhos
+            olho_esq = landmarks[468]
+            olho_dir = landmarks[473]
+
             pd = calculate_pd(
-                (landmarks[0].x * w, landmarks[0].y * h),
-                (landmarks[1].x * w, landmarks[1].y * h)
+                (olho_esq.x * w, olho_esq.y * h),
+                (olho_dir.x * w, olho_dir.y * h)
             )
+
             st.success(f"DP estimada: {pd:.2f} mm")
-        st.image(foto)
+
+        st.image(frame)
 
 def teste_visao_menu():
     st.header("Teste de Visão")

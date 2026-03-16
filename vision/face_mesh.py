@@ -1,11 +1,33 @@
-import mediapipe as mp
 import cv2
+import mediapipe as mp
+import numpy as np
 
-mp_face_mesh = mp.solutions.face_mesh
+from mediapipe.tasks.python import vision
+from mediapipe.tasks.python import BaseOptions
+
+# caminho do modelo
+MODEL_PATH = "face_landmarker.task"
+
+options = vision.FaceLandmarkerOptions(
+    base_options=BaseOptions(model_asset_path=MODEL_PATH),
+    running_mode=vision.RunningMode.IMAGE
+)
+
+detector = vision.FaceLandmarker.create_from_options(options)
+
 
 def detect_face(frame):
     """
-    Retorna landmarks do rosto usando MediaPipe Face Mesh.
+    Detecta landmarks faciais usando a nova API do MediaPipe.
     """
-    face_mesh = mp_face_mesh.FaceMesh(static_image_mode=True)
-    return face_mesh.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+
+    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+    mp_image = mp.Image(
+        image_format=mp.ImageFormat.SRGB,
+        data=rgb
+    )
+
+    result = detector.detect(mp_image)
+
+    return result
